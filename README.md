@@ -1,35 +1,29 @@
 # AnalysisTool-for-bioreactor
 
-Intruduction for console application of AdrianasAnalysisTool (Drag and drop the folder on Desktop)
+Introduction for console application of AnalysisTool-for-bioreactor (Save the hole folder "AnalysisTool-for-bioreactor")
 
-You have to change <currentUser> to your username
 
-Also you have to install .NET 8.0 from 
-https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+Do!
+	- change <currentUser> to your username below
 
-paste data table in the AndianasAnalysisTool "InsertTableHere" folder
-	/Users/<currentUser>/Desktop/AdrianaAnalysisTool/InsertTableHere
+	- install .NET 8.0 if you have not done before		(https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
-(there is also a output folder for the data analysis tables):
-	/Users/<currentUser>/Desktop/AdrianaAnalysisTool/Output
+	- copy/paste your data table to "InsertTableHere" folder (/AnalysisTool-for-bioreactor/InsertTableHere) 
 
+	- after analysis look into folder "Output"	(for the data analysis tables and plot html files)
 
 
 Step by Step introduction:
 
-open terminal on IOS (or Windows console on Windows) and paste the following text and press enter:
+	- open console and locate to the App data path
 
-	cd /Users/<currentUser>/Desktop/AdrianaAnalysisTool/Analysis/src/App
+		e.g. if it saved on Desktop 
+			copy/paste "cd /Users/<currentUser>/Desktop/AnalysisTool-for-bioreactor/Analysis/src/App" and press enter
 
-	e.g. cd /Users/simon/Desktop/AdrianaAnalysisTool/Analysis/src/App
+	- start application
+		copy/paste "dotnet run" and press enter
 
-
-Next paste the following text and press enter again:
-	dotnet run
-
-
-Now the application runs and you can read the Introduction to use it!
-
+==> Now the application runs and you can read the introduction to use it!
 
 TIPS!:
 Give the Input like:
@@ -46,13 +40,4 @@ Or
 ]
 
 
-
 If it fails and you don't know why please contact foelling@rhrk.de
-
-
-
-
-
-
-
-
