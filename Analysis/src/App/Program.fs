@@ -148,7 +148,7 @@ let rec main argv =
                 AnsiConsole.Status()
                     .Start("\n\n[bold][slowblink]Loading...[/][/]\n", fun ctx ->
                         Thread.Sleep(200);
-                        analysis
+                        analysis |> ignore
                     )
                 
                 let restart = 

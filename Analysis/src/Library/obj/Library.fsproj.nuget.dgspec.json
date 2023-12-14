@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj": {}
+    "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj": {}
   },
   "projects": {
-    "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj": {
+    "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj",
+        "projectUniqueName": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj",
         "projectName": "Library",
-        "projectPath": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj",
+        "projectPath": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj",
         "packagesPath": "/Users/simonfoellinger/.nuget/packages/",
-        "outputPath": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/obj/",
+        "outputPath": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/simonfoellinger/.nuget/NuGet/NuGet.Config"

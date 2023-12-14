@@ -9,6 +9,6 @@
             duplicationTimeOfGrowphase : float
         }
 
-    type Result<'a, 'b> =
-        | Ok of 'a
-        | Error of 'b
+    type Result<'T, 'TError> =
+        | Ok of 'T
+        | Error of 'TError

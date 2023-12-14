@@ -3893,11 +3893,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/App/App.fsproj",
+      "projectUniqueName": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/App/App.fsproj",
       "projectName": "App",
-      "projectPath": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/App/App.fsproj",
+      "projectPath": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/App/App.fsproj",
       "packagesPath": "/Users/simonfoellinger/.nuget/packages/",
-      "outputPath": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/App/obj/",
+      "outputPath": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/App/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/simonfoellinger/.nuget/NuGet/NuGet.Config"
@@ -3913,11 +3913,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Function/Function.fsproj": {
-              "projectPath": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Function/Function.fsproj"
+            "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Function/Function.fsproj": {
+              "projectPath": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Function/Function.fsproj"
             },
-            "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj": {
-              "projectPath": "/Users/simonfoellinger/Desktop/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj"
+            "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj": {
+              "projectPath": "/Users/simonfoellinger/Documents/GitHub_Repository/AnalysisTool-for-bioreactor/Analysis/src/Library/Library.fsproj"
             }
           }
         }

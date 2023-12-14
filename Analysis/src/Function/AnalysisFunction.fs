@@ -439,35 +439,36 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
 
         let xs (growphase_index : int) =
             let SeqOfOD680 =
-                growphase_time_OD growphase_index
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
             let vector_OD = vector SeqOfOD680
             vector_OD 
 
         let ys (growphase_index : int)=
             let SeqOfOD680 =
-                growphase_time_OD growphase_index
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> od680)
             let vector_OD = vector SeqOfOD680
             vector_OD 
         let fit = 
-            if Vector.length (xs growphase_index) > 3 && Vector.length (ys growphase_index) > 3 then
+            //if Vector.length (xs growphase_index) > 3 && Vector.length (ys growphase_index) > 3 then
                 Fitting.LinearRegression.fit(xs growphase_index ,ys growphase_index,FittingMethod = Fitting.Method.Robust RobustEstimator.TheilSen)
-            else
-                Fitting.LinearRegression.Coefficients(vector [0.0;0.0])
+            // else
+            //     Fitting.LinearRegression.Coefficients(vector [0.0;0.0])
         let e : float = 
-            if Array.isEmpty (growphase_time_OD growphase_index) then
-                0.0
-            else
-                growphase_time_OD growphase_index
+            // if Array.isEmpty (growphase_time_OD growphase_index) then
+            //     0.0
+            // else
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
                 |> Array.last
         let s : float =
-            if Array.isEmpty (growphase_time_OD growphase_index) then
-                0.0
-            else
-                growphase_time_OD growphase_index
+            // if Array.isEmpty (growphase_time_OD growphase_index) then
+            //     0.0
+            // else
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
+                |> Array.sortDescending
                 |> Array.last
         let linaer_fit = 
             [s .. 0.1 .. e] 
@@ -512,6 +513,13 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
         //     )
         //     |> Array.item 0
 
+        let treatment1and2Tuple =
+            let groupedByTreatment = 
+                lightdata
+                |> Array.groupBy (fun (time, lightData) -> lightData)
+                |> Array.sortByDescending (fun (lightTreatment,_) -> lightTreatment )
+            (fst groupedByTreatment.[1],fst groupedByTreatment.[0])
+
         let maxYValue =
             match Array.isEmpty odData with
             | true -> 0.0  // or any default value you prefer
@@ -528,7 +536,7 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
                         Y1 = 0.0, //(snd (odData |> Array.sortByDescending snd |> Array.last) + 1.0),
                         Opacity = 0.1,
                         FillColor = Color.fromHex "#ffffba",
-                        Label = ShapeLabel.init(TextTemplate = $"Highlight {100}", TextAngle = TextAngle.Degrees 0.0, TextPosition = TextPosition.BottomCenter )
+                        Label = ShapeLabel.init(TextTemplate = $"Highlight {fst treatment1and2Tuple}", TextAngle = TextAngle.Degrees 0.0, TextPosition = TextPosition.BottomCenter )
                         )
                 else
                     Shape.init (
@@ -539,7 +547,7 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
                         Y1 = 0.0, //(snd (odData |> Array.sortByDescending snd |> Array.last) + 1.0),
                         Opacity = 0.1,
                         FillColor = Color.fromHex "#ffffba",
-                        Label = ShapeLabel.init(TextTemplate = $"Highlight {1000}", TextAngle = TextAngle.Degrees 0.0, TextPosition = TextPosition.BottomCenter )
+                        Label = ShapeLabel.init(TextTemplate = $"Highlight {snd treatment1and2Tuple}", TextAngle = TextAngle.Degrees 0.0, TextPosition = TextPosition.BottomCenter )
                         )
         )
         |> Array.toList
@@ -550,7 +558,7 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
             [
                 for i in 0 .. growphase.Length - 1 do
                 (ChartGrowphase_linearFit growphase odData i) |> Chart.withTraceInfo $"Robust TheilSen {i}"
-                |> Chart.withLineStyle(Width = 2.5, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
+                |> Chart.withLineStyle(Width = 2.25, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
                 |> Chart.withAxisAnchor(X=1,Y=1)
                 |> Chart.withTraceInfo(Name = $"Phase ID: {i}")
             ]
@@ -571,8 +579,8 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
             |> Chart.withTraceInfo(Name = "Lighttreatment (light?)")
             |> Chart.withAxisAnchor(X=1,Y=2)
         [
-            linearRegression_all_chartLine
             odData_all_chartPoint
+            linearRegression_all_chartLine
             lightData_all_chartPoint
             pumpData_all_chartPoint
         ]
@@ -609,7 +617,7 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
             [
                 for i in 0 .. growphase.Length - 1 do
                 (ChartGrowphase_linearFit growphase odData i) |> Chart.withTraceInfo $"Robust TheilSen {i}"
-                |> Chart.withLineStyle(Width = 2.5, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
+                |> Chart.withLineStyle(Width = 2.25, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
                 |> Chart.withAxisAnchor(Y=1)
                 |> Chart.withTraceInfo(Name = $"Phase ID: {i}")
             ]
@@ -630,8 +638,8 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
             |> Chart.withTraceInfo(Name = "Lighttreatment (µE)")
             |> Chart.withAxisAnchor(Y=2)
         [
-            linearRegression_all_chartLine
             odData_all_chartPoint
+            linearRegression_all_chartLine
             lightData_all_chartPoint
             pumpData_all_chartPoint
         ]
@@ -683,22 +691,22 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
 
         let xs (growphase_index : int) =
             let SeqOfOD680 =
-                growphase_time_OD growphase_index
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
             let vector_OD = vector SeqOfOD680
             vector_OD 
 
         let ys (growphase_index : int)=
             let SeqOfOD680 =
-                growphase_time_OD growphase_index
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> od680)
             let vector_OD = vector SeqOfOD680
             vector_OD 
         let fit = 
-            if Vector.length (xs growphase_index) <> 0 && Vector.length (ys growphase_index) <> 0 then
+            //if Vector.length (xs growphase_index) <> 0 && Vector.length (ys growphase_index) <> 0 then
                 Fitting.LinearRegression.fit(xs growphase_index ,ys growphase_index,FittingMethod = Fitting.Method.Robust RobustEstimator.TheilSen)
-            else
-                Fitting.LinearRegression.Coefficients(vector [0.0;0.0])
+            // else
+            //     Fitting.LinearRegression.Coefficients(vector [0.0;0.0])
         fit.Coefficients.[1]
 
 // function for table values -> List List string
@@ -958,6 +966,13 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
         |> Chart.show
 
 
+// let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder : int list) : Result<unit, string> =
+//     // match (analysis fileName upperODCut lowerODCut cylinder) with
+//     // | _ -> failwith "ohoh"
+//     // | () -> Ok()
+//     Ok(analysis fileName upperODCut lowerODCut cylinder)
+    
+    
         
 let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder : int list) : Result<unit, string> =
     let currentProjectPath = 
@@ -1360,35 +1375,36 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
 
         let xs (growphase_index : int) =
             let SeqOfOD680 =
-                growphase_time_OD growphase_index
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
             let vector_OD = vector SeqOfOD680
             vector_OD 
 
         let ys (growphase_index : int)=
             let SeqOfOD680 =
-                growphase_time_OD growphase_index
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> od680)
             let vector_OD = vector SeqOfOD680
             vector_OD 
         let fit = 
-            if Vector.exists (fun x -> x = 2) (xs growphase_index) && Vector.exists (fun x -> x = 2) (ys growphase_index) then
+            //if Vector.length (xs growphase_index) > 3 && Vector.length (ys growphase_index) > 3 then
                 Fitting.LinearRegression.fit(xs growphase_index ,ys growphase_index,FittingMethod = Fitting.Method.Robust RobustEstimator.TheilSen)
-            else
-                Fitting.LinearRegression.Coefficients(vector [0.0;0.0])
+            // else
+            //     Fitting.LinearRegression.Coefficients(vector [0.0;0.0])
         let e : float = 
-            if Array.isEmpty (growphase_time_OD growphase_index) then
-                0.0
-            else
-                growphase_time_OD growphase_index
+            // if Array.isEmpty (growphase_time_OD growphase_index) then
+            //     0.0
+            // else
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
                 |> Array.last
         let s : float =
-            if Array.isEmpty (growphase_time_OD growphase_index) then
-                0.0
-            else
-                growphase_time_OD growphase_index
+            // if Array.isEmpty (growphase_time_OD growphase_index) then
+            //     0.0
+            // else
+                (growphase_time_OD growphase_index)
                 |> Array.map (fun (time,od680) -> time)
+                |> Array.sortDescending
                 |> Array.last
         let linaer_fit = 
             [s .. 0.1 .. e] 
@@ -1436,7 +1452,7 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
             [
                 for i in 0 .. growphase.Length - 1 do
                 (ChartGrowphase_linearFit growphase odData i) |> Chart.withTraceInfo $"Robust TheilSen {i}"
-                |> Chart.withLineStyle(Width = 2.5, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
+                |> Chart.withLineStyle(Width = 10.5, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
                 |> Chart.withAxisAnchor(X=1,Y=1)
                 |> Chart.withTraceInfo(Name = $"Phase ID: {i}")
             ]
@@ -1503,7 +1519,7 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
             [
                 for i in 0 .. growphase.Length - 1 do
                 (ChartGrowphase_linearFit growphase odData i) |> Chart.withTraceInfo $"Robust TheilSen {i}"
-                |> Chart.withLineStyle(Width = 2.5, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
+                |> Chart.withLineStyle(Width = 10.5, Color = Color.fromHex("#fb2e01"), Dash=StyleParam.DrawingStyle.Dot)
                 |> Chart.withAxisAnchor(Y=1)
                 |> Chart.withTraceInfo(Name = $"Phase ID: {i}")
             ]
@@ -1524,10 +1540,10 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
             |> Chart.withTraceInfo(Name = "Lighttreatment (light?)")
             |> Chart.withAxisAnchor(X=1,Y=3)
         [
-            lightData_all_chartPoint;
-            pumpData_all_chartPoint;
-            odData_all_chartPoint;
-            linearRegression_all_chartLine;
+            lightData_all_chartPoint
+            pumpData_all_chartPoint
+            odData_all_chartPoint
+            linearRegression_all_chartLine
         ]
         |> Chart.combine
         |> Chart.withShapes(shapes = (shapeGrow growphase odData), Append = true)
