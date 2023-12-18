@@ -25,15 +25,18 @@ open FSharpAux.IO
 // let currentDocumentPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) 
 // let currentRepositryFolderPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) + @"/GitHub_Repository/AnalysisTool-for-bioreactor"
 // let currentDirection = __SOURCE_DIRECTORY__
-
+// let separator = System.IO.Path.PathSeparator
 
 //Analysis full with horizontal split End Graph and only 3 row table
 let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder : int list) =
     let currentProjectPath = 
         (__SOURCE_DIRECTORY__)
-            .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F';'/';'c';'r';'s';'/';'s';'i';'s';'y';'l'|])
+            //.Replace('C:\\' '')
+            //.Replace('\\', '/')
+            .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F';'/';'\\';'c';'r';'s';'/';'\\';'s';'i';'s';'y';'l'|])
             .TrimEnd([|'a';'n';'A'|])
-            .TrimEnd([|'/'|])         // "deletes /Analysis/src/Function from currentPath")
+            .TrimEnd([|'/';'\\'|])         // "deletes /Analysis/src/Function from currentPath")
+            //.Replace('/', '\\')
     let rawData : Frame<float,string> =  
         Frame.ReadCsv(location = (currentProjectPath + @"/InsertTableHere/" + fileName+".txt"),
         separators = "\t", 
