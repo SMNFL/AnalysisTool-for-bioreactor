@@ -177,4 +177,4 @@ let rec main argv =
             AnsiConsole.Confirm(prompt = "\n\n \t[yellow]Do you want to try again?[/]\n\n")
 
         if restart = true then main argv |> ignore else AnsiConsole.MarkupLine "\n\n Thanks for using my AnalysisTool, i hope you liked it! \n [blue bold]If you want to start again type [underline]dotnet run[/] and press enter.[/] \n\n"
-    1
+    0

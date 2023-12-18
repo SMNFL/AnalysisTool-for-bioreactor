@@ -23,7 +23,7 @@ open FSharpAux.IO
 
 // let currentDesktopPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.Desktop)
 // let currentDocumentPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) 
-// let currentRepositryFolderPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) + "/GitHub_Repository/AnalysisTool-for-bioreactor"
+// let currentRepositryFolderPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) + @"/GitHub_Repository/AnalysisTool-for-bioreactor"
 // let currentDirection = __SOURCE_DIRECTORY__
 
 
@@ -35,8 +35,8 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
             .TrimEnd([|'a';'n';'A'|])
             .TrimEnd([|'/'|])         // "deletes /Analysis/src/Function from currentPath")
     let rawData : Frame<float,string> =  
-        Frame.ReadCsv(location = (currentProjectPath+"/InsertTableHere/"+fileName+".txt"),
-        separators = "\t",
+        Frame.ReadCsv(location = (currentProjectPath + @"/InsertTableHere/" + fileName+".txt"),
+        separators = "\t", 
         hasHeaders = true,
         inferRows = 10000 // damit die ersten 1000 zeilen genommen werden, um den Typ zu bestimmen
         // schema = 
@@ -949,7 +949,7 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
         //|> Chart.withDescription [description growphase odData]
         |> Chart.withTitle($"growphases analysis of cylinder {sampleNumber odData}")
     let tableExport (growphase : (float * float) array) (odData:(float * float) array) =
-        FileIO.writeToFile true (currentProjectPath + "/Output/" + $"tableOfCylinder_{sampleNumber odData}" + ".csv") ( (table_list growphase odData) |> Seq.map (fun rowItem -> $"{rowItem.PhaseID};%.2f{(rowItem.startTimeGrowphase)};%.2f{(rowItem.endTimeGrowphase)};%.4f{(rowItem.slopeOrGrowrateOfLinearRegressionOrGrowphase)};%.4f{(rowItem.duplicationTimeOfGrowphase)}"))
+        FileIO.writeToFile true (currentProjectPath + @"/Output/" + $"tableOfCylinder_{sampleNumber odData}" + ".csv") ( (table_list growphase odData) |> Seq.map (fun rowItem -> $"{rowItem.PhaseID};%.2f{(rowItem.startTimeGrowphase)};%.2f{(rowItem.endTimeGrowphase)};%.4f{(rowItem.slopeOrGrowrateOfLinearRegressionOrGrowphase)};%.4f{(rowItem.duplicationTimeOfGrowphase)}"))
     let tableshow (growphase : (float * float) array) (odData:(float * float) array) =
         table growphase odData
         |> Chart.withTitle($"table: growphase characteristics of cylinder {sampleNumber odData}")
@@ -957,10 +957,10 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
     for i in cylinder do
         (tableExport growphase_all.[i] odData680_all.[i])
         (endGraph_single growphase_all.[i] lightphase_all.[i] odData680_all.[i] pump_Data_all.[i] lightData_all.[i])
-        |> Chart.saveHtml(path = (currentProjectPath + "/Output/" + $"simpleAnalysisOfCylinder_{(sampleNumber odData680_all.[i])}" + ".html"), OpenInBrowser = false )
+        |> Chart.saveHtml(path = (currentProjectPath + @"/Output/" + $"simpleAnalysisOfCylinder_{(sampleNumber odData680_all.[i])}" + ".html"), OpenInBrowser = false )
         //(description growphase_all.[i] odData680_all.[i]) |> Giraffe.ViewEngine.RenderView.AsString.xmlNode;
         (analysisFull growphase_all.[i] lightphase_all.[i] odData680_all.[i] pump_Data_all.[i] lightData_all.[i]) 
-        |> Chart.saveHtml(path = (currentProjectPath + "/Output/" + $"advancedAnalysisOfCylinder_{(sampleNumber odData680_all.[i])}" + ".html"), OpenInBrowser = false )
+        |> Chart.saveHtml(path = (currentProjectPath + @"/Output/" + $"advancedAnalysisOfCylinder_{(sampleNumber odData680_all.[i])}" + ".html"), OpenInBrowser = false )
         (analysisFull growphase_all.[i] lightphase_all.[i] odData680_all.[i] pump_Data_all.[i] lightData_all.[i]) 
         |> Chart.show
         (endGraph_single growphase_all.[i] lightphase_all.[i] odData680_all.[i] pump_Data_all.[i] lightData_all.[i])
@@ -981,7 +981,7 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
             .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F';'/';'c';'r';'s';'/';'s';'i';'s';'y';'l'|])
             .TrimEnd([|'a';'n';'A';'/'|])         // "deletes /Analysis/src/Function from currentPath")
     let rawData : Frame<float,string> =  
-        Frame.ReadCsv(location = (currentProjectPath + "/InsertTableHere/" + fileName + ".txt"),
+        Frame.ReadCsv(location = (currentProjectPath + @"/InsertTableHere/" + fileName + ".txt"),
         separators = "\t",
         hasHeaders = true,
         inferRows = 10000 // damit die ersten 1000 zeilen genommen werden, um den Typ zu bestimmen
@@ -1867,7 +1867,7 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
         //|> Chart.withDescription [description growphase odData]
         |> Chart.withTitle($"growphases analysis of cylinder {sampleNumber odData}")
     let tableExport (growphase : (float * float) array) (odData:(float * float) array) =
-        FileIO.writeToFile true (currentProjectPath + "/Output/" + $"tableOfCylinder_{sampleNumber odData}" + ".csv") ( (table_list growphase odData) |> Seq.map (fun rowItem -> $"{rowItem.PhaseID};%.2f{(rowItem.startTimeGrowphase)};%.2f{(rowItem.endTimeGrowphase)};%.4f{(rowItem.slopeOrGrowrateOfLinearRegressionOrGrowphase)};%.4f{(rowItem.duplicationTimeOfGrowphase)}"))
+        FileIO.writeToFile true (currentProjectPath + @"/Output/" + $"tableOfCylinder_{sampleNumber odData}" + ".csv") ( (table_list growphase odData) |> Seq.map (fun rowItem -> $"{rowItem.PhaseID};%.2f{(rowItem.startTimeGrowphase)};%.2f{(rowItem.endTimeGrowphase)};%.4f{(rowItem.slopeOrGrowrateOfLinearRegressionOrGrowphase)};%.4f{(rowItem.duplicationTimeOfGrowphase)}"))
     let tableshow (growphase : (float * float) array) (odData:(float * float) array) =
         table growphase odData
         |> Chart.withTitle($"table: growphase characteristics of cylinder {sampleNumber odData}")
