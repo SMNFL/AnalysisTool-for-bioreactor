@@ -7,8 +7,8 @@ open Spectre.Console
 let rec main argv =
     // let currentProjectPathByApp = 
     //     (__SOURCE_DIRECTORY__)
-    //         .TrimEnd([|'p';'p';'A';'/';'c';'s';'r';'/';'s';'i';'s';'y';'l';'a'|])
-    //         .TrimEnd([|'n';'A';'/'|])           // "deletes /Analysis/src/App from currentPath")
+    //         .TrimEnd([|'p';'p';'A';'/';'\\';'c';'s';'r';'/';'\\';'s';'i';'s';'y';'l';'a'|])
+    //         .TrimEnd([|'n';'A';'/';'\\'|])           // "deletes /Analysis/src/App from currentPath")
     //Console.BackgroundColor <- ConsoleColor.Black
     Console.ForegroundColor <- ConsoleColor.DarkGray
     //AnsiConsole.Profile()
@@ -39,22 +39,18 @@ let rec main argv =
         | [| fileName; upperThreshold; lowerThreshold; cylinder |] when input.Length = 4 ->
 
             AnsiConsole.Status()
-                //.Spinner(Spinner.Known.SimpleDotsScrolling)
-                //.SpinnerStyle(Style.Parse("green bold"))
-                .Start("\n\n[bold][slowblink]Loading...[/][/]\n", fun ctx ->
+                .Start("\n\n[green bold][slowblink]Loading[/][/]\n", fun ctx ->
+                    ctx.Spinner <- Spinner.Known.SimpleDotsScrolling;
+                    ctx.SpinnerStyle <- Style.Parse("green bold");
                     Thread.Sleep(2000);
                 )
 
             AnsiConsole.Status()
-                //.Spinner(Spinner.Known.SimpleDotsScrolling)
-                // .SpinnerStyle(Style.Parse("green bold"))
-                .Start("Read in input", fun ctx ->
+                .Start("[green bold]read input[/]", fun ctx ->
                     AnsiConsole.MarkupLine("\n\nLOG: Read data ...");
+                    ctx.Spinner <- Spinner.Known.SimpleDotsScrolling;
+                    ctx.SpinnerStyle <- Style.Parse("green bold");
                     Thread.Sleep(1000);
-                    //Update the status and spinner
-                    //ctx.Status("Next task");
-                    // ctx.Spinner(Spinner.Known.Star);
-                    // ctx.SpinnerStyle(Style.Parse("green"));
                 )
 
             let isFailed result =
@@ -65,53 +61,35 @@ let rec main argv =
             let resultForFailTest = AnalysisFunction.analysisTest fileName (float upperThreshold) (float lowerThreshold) (if cylinder = "all" then [0..7] else [int cylinder - 1 .. int cylinder - 1])
 
             AnsiConsole.Status()
-                // .Spinner(Spinner.Known.SimpleDotsScrolling)
-                // .SpinnerStyle(Style.Parse("green bold"))
-                .Start("Read in data input", fun ctx ->
+                .Start("[green bold]read input[/]", fun ctx ->
+                    ctx.Spinner <- Spinner.Known.SimpleDotsScrolling;
+                    ctx.SpinnerStyle <- Style.Parse("green bold");
                     AnsiConsole.MarkupLine("LOG: Setup OD thresholds ...");
                     Thread.Sleep(1000);
                     //Update the status and spinner
-                    //ctx.Status("Next task");
-                    // ctx.Spinner(Spinner.Known.Star);
-                    // ctx.SpinnerStyle(Style.Parse("green"));
 
                     AnsiConsole.MarkupLine("LOG: Choose cylinder(s) ...");
                     Thread.Sleep(1000);
-                    //Update the status and spinner
-                    //ctx.Status("Next task");
-                    // ctx.Spinner(Spinner.Known.Star);
-                    // ctx.SpinnerStyle(Style.Parse("green"));
                 )
 
             if isFailed resultForFailTest then
                 Console.WriteLine(Failure "")
             else
-                //AnsiConsole.MarkupLine "\n"
                 AnsiConsole.Status()
-                    .Start("Read in data input", fun ctx ->
+                    .Start("[green bold]read input[/]", fun ctx ->
+                        ctx.Spinner <- Spinner.Known.SimpleDotsScrolling;
+                        ctx.SpinnerStyle <- Style.Parse("green bold");
                         AnsiConsole.MarkupLine("LOG: Loading light treatment data ...");
                         Thread.Sleep(1000);
-                        //Update the status and spinner
-                        //ctx.Status("Next task");
-                        // ctx.Spinner(Spinner.Known.Star);
-                        // ctx.SpinnerStyle(Style.Parse("green"));
 
                         AnsiConsole.MarkupLine("LOG: Loading OD messurement data ...");
                         Thread.Sleep(1000);
-                        //Update the status and spinner
-                        // ctx.Status("Next task");
-                        // ctx.Spinner(Spinner.Known.Star);
-                        // ctx.SpinnerStyle(Style.Parse("green"));
 
                         AnsiConsole.MarkupLine("LOG: Loading medium pump volume data ...");
                         Thread.Sleep(1000);
-                        //Update the status and spinner
-                        // ctx.Status("Next task");
-                        // ctx.Spinner(Spinner.Known.Star);
-                        // ctx.SpinnerStyle(Style.Parse("green"));
                     );
                 AnsiConsole.MarkupLine "\n [bold green]Valid Input![/]\n"     
-                Thread.Sleep(1000)
+                Thread.Sleep(2000)
                 AnsiConsole.MarkupLine $"[bold lightsteelblue3]File:[/] {fileName}"
                 Thread.Sleep(500)
                 AnsiConsole.MarkupLine $"[bold lightsteelblue3]Upper OD Threshold:[/] {upperThreshold}"
@@ -168,11 +146,10 @@ let rec main argv =
         let upperThreshold = input.[1] 
         let lowerThreshold = input.[2]
         let cylinder = input.[3]
-        
-        AnsiConsole.MarkupLine $"{ex.Message}"
 
         Thread.Sleep(3000)
         AnsiConsole.MarkupLine "\n\n [red bold]An error occurred:[/] \n  [red]Oh something went wrong, maybe [underline]you mistyped[/] or the data [underline]table layout is not correct[/].[/]\n  [red]Analysis failed.[/]\n\n"
+        AnsiConsole.MarkupLine $"[red bold]Issue: [/][gray]{ex.Message}[/] \n\n"
 
         let restart = 
             AnsiConsole.Confirm(prompt = "\n\n \t[yellow]Do you want to try again?[/]\n\n")
