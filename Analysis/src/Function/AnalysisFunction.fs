@@ -32,7 +32,8 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
     let currentProjectPath = 
         (__SOURCE_DIRECTORY__)
             .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F';'/';'c';'r';'s';'/';'s';'i';'s';'y';'l'|])
-            .TrimEnd([|'a';'n';'A';'/'|])         // "deletes /Analysis/src/Function from currentPath")
+            .TrimEnd([|'a';'n';'A'|])
+            .TrimEnd([|'/'|])         // "deletes /Analysis/src/Function from currentPath")
     let rawData : Frame<float,string> =  
         Frame.ReadCsv(location = (currentProjectPath+"/InsertTableHere/"+fileName+".txt"),
         separators = "\t",

@@ -17,7 +17,7 @@ let rec main argv =
     Console.SetWindowSize(90 ,50)
     AnsiConsole.Write(new FigletText(Color = Color.LightSteelBlue1,text = "AnalysisTool"))
     AnsiConsole.Markup 
-        "\n Please [underline]enter the filename[/] of the data table\n [gray](';' separated textfile, filename without '.txt')[/]\n [gray](needs all 8 columns for pump-, light-, and OD-data),[/]\n also give an [underline]upper and lower OD threshold[/] for the calculation of the growphase,\n additionaly [underline]add the cylinder you want to analyse[/] [gray](choose 1-8 or all)\n (press SPACE between filename and the values)[/]\n\n [lightsteelblue3][bold]Example:[/] 202310_TR16_HLexperiment_RawData_Venny_Simon 0.44 0.36 3[/]\n\n [gray]Write [underline]exit[/] as input to quit the application [/]\n\n"
+        "\n Please [underline]enter the filename[/] of the data table\n [gray]('TAB' separated textfile, filename without '.txt')[/]\n [gray](column names have to contain '.pump', '.light', and '.od',[/]\n [gray]-> for cylinder indetification have to contain also '-NUMBER-' e.g. '-1-' .. '-8-')[/]\n also give an [underline]upper and lower OD threshold[/] for the calculation of the growphase,\n additionaly [underline]add the cylinder you want to analyse[/] [gray](choose 1-8 or all)\n (press SPACE between filename and the values)[/]\n\n [lightsteelblue3][bold]Example:[/] 202310_TR16_HLexperiment_RawData_Venny_Simon 0.44 0.36 3[/]\n\n [gray]Write [underline]exit[/] as input to quit the application [/]\n\n"
     AnsiConsole.Write(new Rule("[blue]Analysis[/]"))
     AnsiConsole.MarkupLine"\n[bold]Input:[/]"
 
@@ -177,4 +177,4 @@ let rec main argv =
             AnsiConsole.Confirm(prompt = "\n\n \t[yellow]Do you want to try again?[/]\n\n")
 
         if restart = true then main argv |> ignore else AnsiConsole.MarkupLine "\n\n Thanks for using my AnalysisTool, i hope you liked it! \n [blue bold]If you want to start again type [underline]dotnet run[/] and press enter.[/] \n\n"
-    0
+    1
