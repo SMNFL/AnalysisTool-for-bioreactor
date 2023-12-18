@@ -25,18 +25,22 @@ open FSharpAux.IO
 // let currentDocumentPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) 
 // let currentRepositryFolderPath = System.Environment.GetFolderPath(folder = System.Environment.SpecialFolder.MyDocuments) + @"/GitHub_Repository/AnalysisTool-for-bioreactor"
 // let currentDirection = __SOURCE_DIRECTORY__
-// let separator = System.IO.Path.PathSeparator
+//let systemPathSeparator = System.IO.Path.DirectorySeparatorChar
+//let seperatorAsString = systemPathSeparator.ToString()
+
 
 //Analysis full with horizontal split End Graph and only 3 row table
 let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder : int list) =
     let currentProjectPath = 
         (__SOURCE_DIRECTORY__)
-            //.Replace('C:\\' '')
-            //.Replace('\\', '/')
-            .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F';'/';'\\';'c';'r';'s';'/';'\\';'s';'i';'s';'y';'l'|])
+            .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F'|])
+            .TrimEnd([|'/';'\\'|])
+            .TrimEnd([|'c';'r';'s'|])
+            .TrimEnd([|'/';'\\'|])
+            .TrimEnd([|'s';'i';'s';'y';'l'|])
             .TrimEnd([|'a';'n';'A'|])
             .TrimEnd([|'/';'\\'|])         // "deletes /Analysis/src/Function from currentPath")
-            //.Replace('/', '\\')
+
     let rawData : Frame<float,string> =  
         Frame.ReadCsv(location = (currentProjectPath + @"/InsertTableHere/" + fileName+".txt"),
         separators = "\t", 
@@ -977,12 +981,16 @@ let analysis (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder :
 //     Ok(analysis fileName upperODCut lowerODCut cylinder)
     
     
-        
 let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylinder : int list) : Result<unit, string> =
     let currentProjectPath = 
         (__SOURCE_DIRECTORY__)
-            .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F';'/';'c';'r';'s';'/';'s';'i';'s';'y';'l'|])
-            .TrimEnd([|'a';'n';'A';'/'|])         // "deletes /Analysis/src/Function from currentPath")
+            .TrimEnd([|'n';'o';'i';'t';'c';'n';'u';'F'|])
+            .TrimEnd([|'/';'\\'|])
+            .TrimEnd([|'c';'r';'s'|])
+            .TrimEnd([|'/';'\\'|])
+            .TrimEnd([|'s';'i';'s';'y';'l'|])
+            .TrimEnd([|'a';'n';'A'|])
+            .TrimEnd([|'/';'\\'|])         // "deletes /Analysis/src/Function from currentPath")
     let rawData : Frame<float,string> =  
         Frame.ReadCsv(location = (currentProjectPath + @"/InsertTableHere/" + fileName + ".txt"),
         separators = "\t",
@@ -1084,7 +1092,6 @@ let analysisTest (fileName:string) (upperODCut:float) (lowerODCut:float) (cylind
             //     "od-sensors-8.od-680"
             // ]
         //|> Frame.mapValues (fun x -> log(x))
-        //|> Frame.getNumericCols
 
 //Pump Data from cylinder 2,4,6,8 and all -> Series with tuple float (Time, Log OD680)
     let pump_Data_1  = //: (float,float) array  = 

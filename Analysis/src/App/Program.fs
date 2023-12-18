@@ -3,7 +3,6 @@ open System
 open System.Threading
 open Spectre.Console
 
-
 [<EntryPoint>]
 let rec main argv =
     // let currentProjectPathByApp = 
@@ -19,7 +18,7 @@ let rec main argv =
     AnsiConsole.Markup 
         "\n Please [underline]enter the filename[/] of the data table\n [gray]('TAB' separated textfile, filename without '.txt')[/]\n [gray](column names have to contain '.pump', '.light', and '.od',[/]\n [gray]-> for cylinder indetification have to contain also '-NUMBER-' e.g. '-1-' .. '-8-')[/]\n also give an [underline]upper and lower OD threshold[/] for the calculation of the growphase,\n additionaly [underline]add the cylinder you want to analyse[/] [gray](choose 1-8 or all)\n (press SPACE between filename and the values)[/]\n\n [lightsteelblue3][bold]Example:[/] 202310_TR16_HLexperiment_RawData_Venny_Simon 0.44 0.36 3[/]\n\n [gray]Write [underline]exit[/] as input to quit the application [/]\n\n"
     AnsiConsole.Write(new Rule("[blue]Analysis[/]"))
-    AnsiConsole.MarkupLine"\n[bold]Input:[/]"
+    AnsiConsole.MarkupLine$"\n[bold]Input: [/]"
 
     let input = 
         let lineInput = Console.ReadLine()
@@ -170,6 +169,8 @@ let rec main argv =
         let lowerThreshold = input.[2]
         let cylinder = input.[3]
         
+        AnsiConsole.MarkupLine $"{ex.Message}"
+
         Thread.Sleep(3000)
         AnsiConsole.MarkupLine "\n\n [red bold]An error occurred:[/] \n  [red]Oh something went wrong, maybe [underline]you mistyped[/] or the data [underline]table layout is not correct[/].[/]\n  [red]Analysis failed.[/]\n\n"
 
